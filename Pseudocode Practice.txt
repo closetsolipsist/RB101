@@ -1,0 +1,84 @@
+Given two integers a and b
+Return a + b
+
+START
+
+# Given integers a an db
+
+RETURN a + b
+
+--------------------------------
+
+# Given a collection of strings
+
+Set a variable to the empty string
+Iterate through the collection
+  Update the saved variable to be concatenated with the current value
+
+# Given a collection strs of strings
+SET c = ''
+SET iterator = 1
+WHILE iterator <= length of strs
+  SET c = c concatenated with string at positon "iterator" of strs
+  iterator = iterator + 1
+PRINT c
+END
+
+--------------------------------
+
+# Given a collection of integers
+
+Set a variable to new_array to an empty collection
+Iterate through the collection of integers
+  append current value to new_array if its index is even
+
+# Given a collection numbers of integers
+SET new_array = []
+SET iterator = 0
+WHILE iterator < length of new_array
+  IF iterator is even
+    append element at positions "iterator" of numbers to new_array
+  SET iterator to iterator + 1
+PRINT new_array
+END
+
+--------------------------------
+
+# Given string str an character c
+set occurrences to 0
+set index to 0
+Iterate through characters of str
+  if current character is c, increment occurrences
+  if occurrences is 3, return index
+  increment index
+return nil
+
+SET index = 0
+SET occurrences = 0
+WHILE index < length of str
+  IF element at position index of str is c
+    SET occurrences to occurrences + 1
+    IF occurrences is 3
+      RETURN index
+  SET index to index + 1
+PRINT nil
+END
+
+--------------------------------
+
+# Given arrays a1 and a2
+create a new array merged_array
+let i be 0
+while i is less than length of a1
+  append the ith element of a1 to merged_array
+  append the ith element of a2 to merged_array
+  increment i
+print merged_array
+
+SET merged_array = []
+SET i = 0
+WHILE i < length of a1
+  append a1[i] to merged_array
+  append a2[i] to merged_array
+  SET i to i + 1
+PRINT merged_array
