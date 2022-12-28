@@ -1,4 +1,4 @@
-VALID_CHOICES = ["rock", "lizard", "spock", "scissors", "paper"]
+VALID_CHOICES = ["rock", "paper", "scissors", "spock", "lizard"]
 
 def prompt(message)
   puts ">> #{message}"
@@ -27,7 +27,12 @@ def beats?(move1, move2)
   index1 = VALID_CHOICES.index(move1)
   index2 = VALID_CHOICES.index(move2)
   distance_around_circle = (index2 - index1) % 5
-  distance_around_circle == 1 || distance_around_circle == 3
+=begin
+I noticed that a move beats another precisely when the second is 2 or 4 steps from the first moving clockwise around the circle depicted at the following
+link we were referred to: https://web.archive.org/web/20181217114425/http://www.samkass.com/theories/RPSSL.html.
+Using this fact makes the code shorter, but I'm worried it makes it less clear what's happening.
+=end
+  distance_around_circle == 2 || distance_around_circle == 4
 end
 
 def play_round
