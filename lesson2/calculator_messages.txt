@@ -1,0 +1,23 @@
+ask for name
+en: Welcome to Calculator! Enter your name
+kl: blech
+
+invalid name
+en: Invalid name, please try again
+kl: blog
+
+greeting
+en: Hi,
+kl: Hlf,
+
+ask for first number
+en: What's the first number?
+kl: D z k?
+
+invalid number
+en: Hmm... that doesn't look like a valid number.
+kl: pplplpl
+
+ask for second numberr
+en: What's the second number?
+kl: flflfl

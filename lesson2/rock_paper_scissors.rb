@@ -1,8 +1,25 @@
 VALID_CHOICES = ["rock", "paper", "scissors"]
 
 def prompt(message)
-  puts ">> #{message}"
+  puts "=> #{message}"
 end
+
+def beats?(move1, move2)
+  move1 == 'rock' && move2 == 'scissors' ||
+    move1 == 'paper' && move2 == 'rock' ||
+    move1 == 'scissors' && move2 == 'paper'
+end
+
+def display_results(choice, computer_choice)
+  if beats?(choice, computer_choice)
+    prompt "You won!"
+  elsif beats?(computer_choice, choice)
+    prompt "Computer won"
+  elsif choice == computer_choice
+    prompt "It's a tie"
+  end
+end
+
 loop do
   choice = nil
   loop do
@@ -11,23 +28,16 @@ loop do
     if VALID_CHOICES.include?(choice)
       break
     else
-      prompt "That's not a valid choice."
+      prompt "That's not a valid choice"
     end
   end
 
   computer_choice = VALID_CHOICES.sample
-  puts "You chose #{choice} and computer chose #{computer_choice}."
 
-  if choice == computer_choice
-    prompt "It's a tie."
-  elsif (choice == "rock" && computer_choice == "scissors") ||
-        (choice == "scissors" && computer_choice == "paper") ||
-        (choice == "paper" && computer_choice == "rock")
-    prompt "You win."
-  else
-    prompt "You lose."
-  end
-  prompt "Would you like to play again?"
-  response = gets.chomp
-  break unless response.downcase.start_with?('y')
+  puts "You chose #{choice} and computer chose #{computer_choice}"
+  display_results(choice, computer_choice)
+
+  prompt "Do you want to play again?"
+  answer = gets.chomp
+  break unless answer.downcase.start_with?('y')
 end

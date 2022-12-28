@@ -44,7 +44,8 @@ def operation_to_gerund(op)
   end
 end
 
-prompt "Welcome to Calculator! Enter your name"
+prompt message["ask for name"]
+"Welcome to Calculator! Enter your name"
 name = ''
 loop do
   name = gets.chomp

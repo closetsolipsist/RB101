@@ -3,9 +3,9 @@ Return a + b
 
 START
 
-# Given integers a an db
+# Given integers a and b
 
-RETURN a + b
+PRINT a + b
 
 --------------------------------
 
@@ -13,14 +13,14 @@ RETURN a + b
 
 Set a variable to the empty string
 Iterate through the collection
-  Update the saved variable to be concatenated with the current value
+  Update the saved variable to be concatenated with the current value in the collection
 
 # Given a collection strs of strings
 SET c = ''
 SET iterator = 1
 WHILE iterator <= length of strs
   SET c = c concatenated with string at positon "iterator" of strs
-  iterator = iterator + 1
+  SET iterator to iterator + 1
 PRINT c
 END
 
@@ -28,7 +28,7 @@ END
 
 # Given a collection of integers
 
-Set a variable to new_array to an empty collection
+Set a variable new_array to an empty collection
 Iterate through the collection of integers
   append current value to new_array if its index is even
 
@@ -44,7 +44,7 @@ END
 
 --------------------------------
 
-# Given string str an character c
+# Given string str and character c
 set occurrences to 0
 set index to 0
 Iterate through characters of str
@@ -59,7 +59,7 @@ WHILE index < length of str
   IF element at position index of str is c
     SET occurrences to occurrences + 1
     IF occurrences is 3
-      RETURN index
+      PRINT index (and END)
   SET index to index + 1
 PRINT nil
 END
@@ -78,7 +78,7 @@ print merged_array
 SET merged_array = []
 SET i = 0
 WHILE i < length of a1
-  append a1[i] to merged_array
-  append a2[i] to merged_array
+  SET merged_array to merged_array with ith element of a1 appended
+  SET merged_array to merged_array with ith element of a2 appended
   SET i to i + 1
 PRINT merged_array
