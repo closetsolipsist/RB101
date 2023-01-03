@@ -1,20 +1,26 @@
 VALID_CHOICES = ["rock", "paper", "scissors", "spock", "lizard"]
+SCORE_TO_WIN_MATCH = 3
 
 def prompt(message)
   puts ">> #{message}"
 end
 
+def unabbreviate(choice)
+  abbreviations = ['r', 'p', 'sc', 'sp', 'l']
+  if abbreviations.include?(choice)
+    VALID_CHOICES[abbreviations.index(choice)]
+  else
+    choice
+  end
+end
+
 def get_player_choice
   choice = nil
-  abbreviations = ['r', 'l', 'sp', 'sc', 'p']
   loop do
     prompt "Choose one: (r)ock, (l)izard, (sp)ock, (sc)issors, (p)aper"
     prompt "(you can type the whole word or just the part in parentheses)"
-    choice = gets.chomp
+    choice = unabbreviate(gets.chomp)
     if VALID_CHOICES.include?(choice)
-      break
-    elsif abbreviations.include?(choice)
-      choice = VALID_CHOICES[abbreviations.index(choice)]
       break
     else
       prompt "That's not a valid choice."
@@ -24,17 +30,14 @@ def get_player_choice
 end
 
 def beats?(move1, move2)
+=begin
+A move beats another precisely when the second is 2 or 4 step from the first
+moving clockwise around the circle depicted at the following link:
+https://web.archive.org/web/20181217114425/http://www.samkass.com/theories/RPSSL.html.
+=end
   index1 = VALID_CHOICES.index(move1)
   index2 = VALID_CHOICES.index(move2)
   distance_around_circle = (index2 - index1) % 5
-=begin
-I noticed that a move beats another precisely when the second is 2 or 4 steps
-from the first moving clockwise around the circle depicted at the following
-link we were referred to:
-https://web.archive.org/web/20181217114425/http://www.samkass.com/theories/RPSSL.html.
-Using this fact makes the code shorter, but I'm worried it makes it less
-clear what's happening.
-=end
   distance_around_circle == 2 || distance_around_circle == 4
 end
 
@@ -54,16 +57,8 @@ def play_round
   end
 end
 
-def play_match(score_to_win)
-  round_number = 1
-  scores = { player: 0, computer: 0 }
-  while scores[:player] < score_to_win && scores[:computer] < score_to_win
-    puts "Round #{round_number}:"
-    winner = play_round
-    scores[winner] += 1 if winner
-    round_number += 1
-  end
-  if scores[:player] >= score_to_win
+def announce_match_result(scores)
+  if scores[:player] > scores[:computer]
     prompt "You won the match!"
   else
     prompt "The computer won the match!"
@@ -72,12 +67,28 @@ def play_match(score_to_win)
          "and #{scores[:computer]} for the computer"
 end
 
+def play_match(score_to_win)
+  round_number = 1
+  scores = { player: 0, computer: 0 }
+  while scores[:player] < score_to_win && scores[:computer] < score_to_win
+    puts "Round #{round_number}:"
+    puts "Score - player: #{scores[:player]}, computer: #{scores[:computer]}"
+    winner = play_round
+    _ = gets
+    system "clear"
+    scores[winner] += 1 if winner
+    round_number += 1
+  end
+  announce_match_result scores
+end
+system "clear"
 prompt "Welcome to rpsls.rb"
-prompt "Whoever wins 3 rounds first wins the match!"
+prompt "Whoever wins #{SCORE_TO_WIN_MATCH} rounds first wins the match!"
 loop do
-  play_match(3)
+  play_match(SCORE_TO_WIN_MATCH)
   puts "-" * 60
   prompt "Would you like to play another match?"
   play_again = gets.chomp
   break unless play_again.downcase.start_with?('y')
+  system "clear"
 end

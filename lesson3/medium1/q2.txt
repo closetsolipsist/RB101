@@ -1,0 +1,5 @@
+We can not concatenate a string with an integer. We could
+convert the integer to a string with Integer#to_s or interpolate it:
+
+puts "the value of 40 + 2 is " + (40 + 2).to_s
+puts "the value of 40 + 2 is #{40 + 2}"

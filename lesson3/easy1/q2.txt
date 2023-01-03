@@ -1,0 +1,6 @@
+1. The 'not equal to' operator. It is used between two expressions to check if they objects they refer to have the same value
+2. The 'not' operator. It is used before an expression and returns true if the expression is falsy (false or nil) and false if it's truthy
+3. By convention, many methods which mutate the calling object have an ! at the end of their name.
+4,5 The ternary operator has the syntax [condition] ? [value if condition is true] : [value if condition is false]. If ? is at the end
+   of a method name, it (generally) indicates that method returns true or false
+6: Just two not operators. Returns true if the expression denotes something truthy and false if it denotes something falsy

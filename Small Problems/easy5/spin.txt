@@ -1,0 +1,2 @@
+The returned string is a different object. str.split yields a new array, which we then mutate,
+finally applying join(" ") to it to yield a new string.

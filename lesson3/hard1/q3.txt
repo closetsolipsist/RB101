@@ -1,0 +1,15 @@
+In A and B, the method does not mutate the objects
+referenced by the local variables one, two and three
+(which at first reference the same objects as their
+identically named counterparts outside the method
+definition), so the output is
+one is: one
+two is: two
+three is: three
+In C, we instead call the mutating method String#gsub!
+on the local variables inside the method, so we do change
+the objects pointerd to by one, two, and three outside
+the method. The output is
+one is: two
+two is: three
+three is: one
