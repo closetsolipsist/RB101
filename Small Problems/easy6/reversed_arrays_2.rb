@@ -1,9 +1,17 @@
 def my_reverse(arr)
-  my_reversed_array = []
+  reversed_array = []
   (1..arr.size).to_a.each do |index|
-    my_reversed_array << arr[-index]
+    reversed_array << arr[-index]
   end
-  my_reversed_array
+  reversed_array
+end
+
+def my_reverse_alt(arr)
+  arr.each_with_object([]) { |item, reversed_array| reversed_array.unshift(item) }
+end
+
+def my_reverse_alt_2(arr)
+  arr.inject([]) { |reversed_array, item| reversed_array.unshift(item)}
 end
 
 p my_reverse([1,2,3,4]) == [4,3,2,1]
@@ -13,6 +21,6 @@ p my_reverse([]) == []
 
 list = [1, 3, 2]
 new_list = my_reverse(list)
-list.object_id != new_list.object_id
-list == [1, 3, 2]
-new_list == [2, 3, 1]
+p list.object_id != new_list.object_id
+p list == [1, 3, 2]
+p new_list == [2, 3, 1]

@@ -16,6 +16,7 @@ def as_word(num)
 end
 
 def alphabetic_number_sort(nums)
+  #nums.sort { |num1, num2| as_word(num1) <=> as_word(num2) } # from Further Exploration
   nums.sort_by { |num| as_word(num) }
 end
 

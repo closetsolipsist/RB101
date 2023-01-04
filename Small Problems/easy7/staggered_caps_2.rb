@@ -1,8 +1,8 @@
-def staggered_case(str)
+def staggered_case(str, toggle_on_non_alphabetic = false)
   index = 0
   staggered_chars = []
   str.chars.each do |char|
-    if ('a'..'z').cover?(char.downcase)
+    if ('a'..'z').cover?(char.downcase) || toggle_on_non_alphabetic
       if index.even?
         staggered_chars << char.upcase
       else
@@ -17,5 +17,5 @@ def staggered_case(str)
 end
 
 p staggered_case('I Love Launch School!') == 'I lOvE lAuNcH sChOoL!'
-p staggered_case('ALL_CAPS') == 'AlL_cApS'
+p staggered_case('ALL CAPS') == 'AlL cApS'
 p staggered_case('ignore 77 the 444 numbers') == 'IgNoRe 77 ThE 444 nUmBeRs'

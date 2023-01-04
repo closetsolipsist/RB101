@@ -1,5 +1,6 @@
-def staggered_case(str)
+def staggered_case(str, capitalize_first = true)
   index = 0
+  index += 1 if capitalize_first == false
   staggered_chars = []
   str.chars.each do |char|
     if index.even?

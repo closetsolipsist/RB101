@@ -1,4 +1,12 @@
 def swap_char_case(char)
+  if char == char.downcase
+    char.upcase
+  else
+    char.downcase
+  end
+end
+
+def swap_char_case_alt(char)
   if ('a'..'z').cover?(char)
     ('A'.ord + (char.ord - 'a'.ord)).chr
   elsif ('A'..'Z').cover?(char)

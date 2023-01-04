@@ -5,6 +5,13 @@ def repeater(str)
   end
   doubled_chars.join
 end
-p repeater('Hello')
-p repeater('Good job!')
-p repeater('')
+
+def repeater_alt(str)
+  chars = str.chars
+  chars.zip(chars).flatten.join
+end
+
+p repeater('Hello') == "HHeelllloo"
+p repeater_alt('Hello') == "HHeelllloo"
+p repeater("Good job!") == "GGoooodd  jjoobb!!"
+p repeater('') == ''

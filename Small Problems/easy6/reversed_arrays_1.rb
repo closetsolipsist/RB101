@@ -8,20 +8,20 @@ def my_reverse!(arr)
   arr
 end
 
-list = [1, 2, 3, 4]
-result = my_reverse!(list)
-p result == [4, 3, 2, 1]
-p list == [4, 3, 2, 1]
-p list.object_id == result.object_id
+list = [1,2,3,4]
+result = reverse!(list)
+p result == [4, 3, 2, 1] # true
+p list == [4, 3, 2, 1] # true
+p list.object_id == result.object_id # true
 
 list = %w(a b e d c)
-p my_reverse!(list) == ["c", "d", "e", "b", "a"]
-p list == ["c", "d", "e", "b", "a"]
+p reverse!(list) == ["c", "d", "e", "b", "a"] # true
+p list == ["c", "d", "e", "b", "a"] # true
 
 list = ['abc']
-p my_reverse!(list) == ["abc"]
-p list == ["abc"]
+p reverse!(list) == ["abc"] # true
+p list == ["abc"] # true
 
 list = []
-p my_reverse!(list) == []
-p list == []
+p reverse!(list) == [] # true
+p list == [] # true

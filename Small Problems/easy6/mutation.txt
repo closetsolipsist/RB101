@@ -1,16 +1,17 @@
 It will print
-MOE
-LARRY
+Moe
+Larry
 CURLY
-SHEMP HARPO
+SHEMP
+Harpo
 CHICO
-GROUCHO
-ZEPP
+Groucho
+Zeppo
 
 We start by assigning array1 to an array and array2 to an
 empty array. Then, for each element in the array, we use the <<
 operator to append it to array2. As a result array1[0] and
 array2[0] reference the same object, and likewise for the other
-indices. Then we apply String#upcase! to each element of arr1.
-It mutates these objects, and so when we print array2, we
-see each of the elements in all caps.
+indices. Then we apply String#upcase! to each element of arr1 which
+starts with 'C' or 'S'. It mutates these objects, and so when we
+print array2, we see each of these elements in all caps.

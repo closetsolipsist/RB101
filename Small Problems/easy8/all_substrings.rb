@@ -16,4 +16,10 @@ def substrings(str)
   substrings
 end
 
-p substrings('abcde')
+p substrings('abcde') == [
+  'a', 'ab', 'abc', 'abcd', 'abcde',
+  'b', 'bc', 'bcd', 'bcde',
+  'c', 'cd', 'cde',
+  'd', 'de',
+  'e'
+]
