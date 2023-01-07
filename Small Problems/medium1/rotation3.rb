@@ -1,3 +1,5 @@
+require 'pry'
+
 def rotate_array(arr)
   return [] if arr.empty?
   arr[1..] + [arr.first]
@@ -19,4 +21,19 @@ def max_rotation(num)
   num
 end
 
-p max_rotation(735291)
+def max_rotation_alt(num)
+  digits = num.to_s.chars
+  num_length = digits.size
+  (1..num_length).to_a.reverse_each do |num_to_rotate|
+    rotated_part = digits[-(num_to_rotate)..]
+    rotated_part = rotated_part[1..] + [rotated_part[0]]
+    digits = digits[0, num_length - num_to_rotate] + rotated_part
+  end
+  digits.join.to_i
+end
+
+p max_rotation_alt(735291) == 321579
+p max_rotation_alt(3) == 3
+p max_rotation_alt(35) == 53
+p max_rotation_alt(105) == 15 # the leading zero gets dropped
+p max_rotation_alt(8_703_529_146) == 7_321_609_845

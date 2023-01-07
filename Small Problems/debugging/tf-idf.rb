@@ -1,3 +1,5 @@
+require 'pry'
+
 # Term frequency - inverse document frequency:
 # A measure of how important a term is to a document in a collection of documents
 # (the importance increases proportionally to the term frequency in the document,
@@ -22,8 +24,10 @@ end
 def idf(term, documents)
   number_of_documents = documents.length
   number_of_documents_with_term = documents.count { |d| tf(term, d) > 0 }
-
-  Math.log(number_of_documents / number_of_documents_with_term)
+  if number_of_documents_with_term == 0
+    return "Error: no documents containing term #{term}."
+  end
+  Math.log(number_of_documents.to_f / number_of_documents_with_term)
 end
 
 # Very simple example
@@ -53,6 +57,8 @@ documents = [document1, document2, document3]
 # For the term 'quantum mechanics', on the other hand, you only want to return document1.
 
 # expected outputs:
+binding.pry
+
 puts tfidf("cat", document1, documents) # ~ 1.2
 puts tfidf("cat", document2, documents) # ~ 1.6
 puts tfidf("cat", document3, documents) # 0
