@@ -1,4 +1,3 @@
-require 'pry'
 INITIAL_SQUARE = ' '
 SYMBOLS = ['X', 'O']
 BOARD_SIDE_LENGTH = 3
