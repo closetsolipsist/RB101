@@ -1,8 +1,11 @@
+require 'yaml'
+
 INITIAL_SQUARE = ' '
 SYMBOLS = ['X', 'O']
 BOARD_SIDE_LENGTH = 3
 GAMES_TO_WIN = 3
 STARTING_SYMBOL = 'X'
+MESSAGES = YAML.load_file('tictactoe_messages.yaml')
 
 def join_or(arr, separator = ', ', final_separator = 'or')
   arr_strs = arr.map(&:to_s)
@@ -16,20 +19,17 @@ def join_or(arr, separator = ', ', final_separator = 'or')
   end
 end
 
-WELCOME_MESSAGE = "Welcome to tictactoe.rb!\n\n"\
-                  "To enter each of your moves, you'll write "\
-                  "the row and column number\nseparated by a space: "\
-                  "the rows from top to bottom are " +
-                  join_or((1..BOARD_SIDE_LENGTH).to_a, ', ', 'and') + ",\n"\
-                  "and the columns from left to right are " +
-                  join_or((1..BOARD_SIDE_LENGTH).to_a, ', ', 'and') + ".\n\n" \
-                  "#{STARTING_SYMBOL} always goes first, and matches consist "\
-                  "of #{GAMES_TO_WIN} games.\n\n"
-
-MATCH_START_MESSAGE = <<HEREDOC
-Would you like to choose who goes first in each game of the match, or
-have it chosen randomly? (Type "choose" or "random" respectively.)
-HEREDOC
+def display_message(message_name)
+  case message_name
+  when 'welcome'
+    positions = join_or((1..BOARD_SIDE_LENGTH).to_a, ", ", "and")
+    puts format(MESSAGES['welcome'], positions: positions,
+                                     start_symbol: STARTING_SYMBOL,
+                                     games_to_win: GAMES_TO_WIN)
+  when 'match_start'
+    puts MESSAGES['match_start']
+  end
+end
 
 def initial_board_state
   board = []
@@ -77,8 +77,8 @@ def display_row(row)
   puts '|' + row.join('|') + '|'
 end
 
-def display_board(board)
-  system('clear')
+def display_board(board, clear_first = true)
+  system('clear') if clear_first
   width = 2 * BOARD_SIDE_LENGTH + 1
   outer_row = '+' + '-' * (width - 2) + '+'
   inner_row = '-' * width
@@ -88,6 +88,19 @@ def display_board(board)
     puts inner_row unless index == board.size - 1
   end
   puts outer_row
+end
+
+def example_board
+  board = []
+  label = 1
+  BOARD_SIDE_LENGTH.times do
+    board << []
+    BOARD_SIDE_LENGTH.times do
+      board[-1] << label
+      label += 1
+    end
+  end
+  board
 end
 
 def other_symbol(given_symbol)
@@ -116,19 +129,31 @@ def in_bounds(row, column)
   positions.include?(row) && positions.include?(column)
 end
 
+def label_to_square(label)
+  row = (label - 1) / BOARD_SIDE_LENGTH
+  column = (label - 1) % BOARD_SIDE_LENGTH
+  [row, column]
+end
+
+def square_to_label(row, column)
+  (row * BOARD_SIDE_LENGTH + column) + 1
+end
+
 def get_player_move(board, player_symbol)
-  print "Enter your move (you are #{player_symbol}): "
+  empty_squares = empty_squares(board).map { |square| square_to_label(*square) }
+  puts "Enter your move (you are #{player_symbol})\n"\
+        "Available moves are: #{join_or(empty_squares, ', ', 'and')}"
   loop do
-    player_input = get_valid_input(/^\d+ \d+$/)
-    row, column = player_input.split(' ')
-                              .map(&:to_i)
-                              .map { |n| n - 1 }
-    if !in_bounds(row, column)
+    player_input = get_valid_input(/^\d+$/).to_i
+    if !(1..BOARD_SIDE_LENGTH**2).cover?(player_input)
       puts "Invalid coordinates, try again."
-    elsif board[row][column] != INITIAL_SQUARE
-      puts "Position already filled, try again."
     else
-      return [row, column]
+      row, column = label_to_square(player_input)
+      if board[row][column] != INITIAL_SQUARE
+        puts "Position already filled, try again."
+      else
+        return [row, column]
+      end
     end
   end
 end
@@ -183,7 +208,7 @@ def assign_player_symbol(assignment_method)
   case assignment_method
   when :choose
     puts "Would you like #{join_or(SYMBOLS)}?"
-    get_valid_input(/^#{SYMBOLS.join('|')}$/)
+    get_valid_input(/^#{SYMBOLS.join('|')}$/i).upcase
   when :random
     SYMBOLS.sample
   end
@@ -225,8 +250,8 @@ def display_score(scores)
 end
 
 def play_match
-  puts MATCH_START_MESSAGE
-  assignment_method = get_valid_input(/^(choose|random)$/).to_sym
+  display_message('match_start')
+  assignment_method = get_valid_input(/^(choose|random)$/i).downcase.to_sym
   scores = { player: 0, computer: 0 }
   loop do
     system("clear")
@@ -241,11 +266,14 @@ def play_match
   announce_match_result(scores)
 end
 
-puts WELCOME_MESSAGE
+system("clear")
+display_message('welcome')
+display_board(example_board, false)
+puts
 loop do
   play_match
-  puts "Would you like to play again? "
-  play_again = gets.chomp
-  break unless play_again.downcase.start_with?('y')
+  puts "Would you like to play again? (y/n) "
+  play_again = get_valid_input(/^y|n$/i).downcase
+  break unless play_again == 'y'
   system('clear')
 end

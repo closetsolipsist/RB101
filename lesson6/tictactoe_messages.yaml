@@ -1,0 +1,17 @@
+welcome: 'Welcome to tictactoe.rb!
+
+
+%{start_symbol} always goes first, and matches consist of %{games_to_win} games.
+
+
+To enter each of your moves, you''ll write the number for the square you want to
+
+play in. Squares are labeled as follows:
+
+
+'
+
+match_start: 'Would you like to choose who goes first in each game of the match, or
+have it
+
+chosen randomly? (Type "choose" or "random" respectively.)'
